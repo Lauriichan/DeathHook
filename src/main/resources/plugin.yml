@@ -1,0 +1,5 @@
+main: org.playuniverse.minecraft.deathhook.DeathHook
+version: 1.0
+name: DeathHook
+author: Lauriichan
+api-version: 1.16
