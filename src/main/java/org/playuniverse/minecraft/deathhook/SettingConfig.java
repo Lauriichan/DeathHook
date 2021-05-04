@@ -13,6 +13,7 @@ public class SettingConfig extends Config {
 
 	private static final String CALENDAR = "\uD83D\uDCC6";
 	private static final String SKULL = "\uD83D\uDC80";
+	private static final String MAP = "\uD83D\uDDFA";
 	private static final String EMPTY = "\u200B";
 
 	private boolean debug = true;
@@ -78,7 +79,7 @@ public class SettingConfig extends Config {
 	}
 
 	private String applyModification(String input) {
-		return input.replace(":empty:", EMPTY).replace(":calendar:", CALENDAR).replace(":skull:", SKULL);
+		return input.replace(":empty:", EMPTY).replace(":calendar:", CALENDAR).replace(":skull:", SKULL).replace(":map:", MAP).replace(":nl:", "\n");
 	}
 
 	private void postModification(JsonObject object) {
