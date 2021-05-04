@@ -25,9 +25,14 @@ import com.syntaxphoenix.syntaxapi.json.JsonValue;
 import com.syntaxphoenix.syntaxapi.json.ValueType;
 import com.syntaxphoenix.syntaxapi.json.value.JsonString;
 import com.syntaxphoenix.syntaxapi.net.http.RequestType;
+import com.syntaxphoenix.syntaxapi.random.NumberGeneratorType;
+import com.syntaxphoenix.syntaxapi.random.RandomNumberGenerator;
 import com.syntaxphoenix.syntaxapi.utils.java.Times;
 
 public class DeathListener implements Listener {
+
+	private final RandomNumberGenerator random = NumberGeneratorType.MURMUR
+			.create((System.currentTimeMillis() >> 24) * 3);
 
 	private final ExecutorService service = Executors.newCachedThreadPool();
 
@@ -56,7 +61,8 @@ public class DeathListener implements Listener {
 	private void processNotification(String name, UUID uniqueId, Location location, String killerName,
 			EntityDamageEvent cause) {
 		if (killerName != null) {
-			performNotification(name, uniqueId, location, message.get(DeathCause.PLAYER).replace("$player", killerName));
+			performNotification(name, uniqueId, location,
+					message.get(DeathCause.PLAYER).replace("$player", killerName));
 			return;
 		}
 		if (cause != null) {
@@ -69,7 +75,8 @@ public class DeathListener implements Listener {
 				if (damage == DamageCause.PROJECTILE) {
 					death = DeathCause.fromProjectileType(entityType);
 				}
-				performNotification(name, uniqueId, location, message.get(death).replace("$entity", message.get(entityType)));
+				performNotification(name, uniqueId, location,
+						message.get(death).replace("$entity", message.get(entityType)));
 				return;
 			}
 			performNotification(name, uniqueId, location, message.get(death));
@@ -112,8 +119,9 @@ public class DeathListener implements Listener {
 	}
 
 	private Function<String, String> applyFunction(String name, UUID uniqueId, Location location, String reason) {
-		return applyFunction(name, uniqueId.toString(), reason, getTime(), Times.getDate("."),
-				location.getBlockX() + "", location.getBlockY() + "", location.getBlockZ() + "",
+		return applyFunction(name, uniqueId.toString(), reason.replace("$random", random.nextInt(10, 100) + ""),
+				getTime(), Times.getDate("."), location.getBlockX() + "", location.getBlockY() + "",
+				location.getBlockZ() + "",
 				location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ());
 	}
 

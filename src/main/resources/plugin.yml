@@ -1,5 +1,5 @@
-main: org.playuniverse.minecraft.deathhook.DeathHook
-version: 1.0
-name: DeathHook
+main: ${project.groupId}.${project.artifactId}.${project.name}
+version: ${project.version}
+name: ${project.name}
 author: Lauriichan
 api-version: 1.16
